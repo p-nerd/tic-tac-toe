@@ -1,14 +1,17 @@
+import "./app.cs";
 import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
-import "./app.css";
+import { GameProvider } from "~/contexts/game_context";
 
 export default function App() {
     return (
         <Router
             root={props => (
                 <>
-                    <Suspense>{props.children}</Suspense>
+                    <Suspense>
+                        <GameProvider>{props.children}</GameProvider>
+                    </Suspense>
                 </>
             )}
         >
