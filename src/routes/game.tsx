@@ -9,7 +9,7 @@ import { cn } from "~/libs/utils";
 const WhichTurn = () => {
     const { turn } = useGame();
     return (
-        <div class="rounded-[0.2rem] bg-black-500 pb-[0.2rem]">
+        <div class="bg-black-500 rounded-[0.2rem] pb-[0.2rem]">
             <button class="flex cursor-default  gap-2 rounded-[0.2rem] bg-black-300 px-3 py-3 uppercase text-black-400">
                 <Show when={turn() === "o"}>
                     <svg
@@ -61,10 +61,20 @@ const Restart = () => {
     );
 };
 
-const BoardBox = (p: { type: TBoardItem }) => {
+const BoardBox = (p: { type: TBoardItem; index: number }) => {
+    const { board, setBoard, turn, setTurn } = useGame();
+
+    const handleClick = () => {
+        setBoard(board().map((x, i) => (i === p.index ? turn() : x) as TBoardItem));
+        setTurn(turn() === "x" ? "o" : "x");
+    };
+
     return (
-        <div class="h-[99px] w-full rounded-md bg-black-500 pb-2">
-            <button class="h-full w-full  cursor-default rounded-md bg-black-300 px-3  py-6 uppercase text-black-400">
+        <div class="bg-black-500 h-[99px] w-full rounded-md pb-2">
+            <button
+                onClick={handleClick}
+                class="h-full w-full cursor-default rounded-md bg-black-300 px-3  py-6 uppercase text-black-400"
+            >
                 <img
                     src={p.type === "x" ? iconX : p.type === "o" ? iconO : ""}
                     alt=""
@@ -99,7 +109,9 @@ const Game = () => {
                     <Restart />
                 </section>
                 <section class="mx-auto mb-10 grid w-[90%] grid-cols-3 gap-5">
-                    <For each={board()}>{b => <BoardBox type={b} />}</For>
+                    <For each={board()}>
+                        {(bb, index) => <BoardBox type={bb} index={index()} />}
+                    </For>
                 </section>
                 <section class="mx-auto grid w-[90%] grid-cols-3 gap-5">
                     <FooterBox
