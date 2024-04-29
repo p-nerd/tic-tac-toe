@@ -1,6 +1,6 @@
 import { createSignal, createContext, useContext, JSXElement } from "solid-js";
 
-type TTurn = "x" | "o";
+export type TTurn = "x" | "o";
 export type TBoardItem = TTurn | "";
 
 const makeGameContext = () => {

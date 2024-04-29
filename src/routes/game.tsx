@@ -8,8 +8,9 @@ import { cn } from "~/libs/utils";
 
 const WhichTurn = () => {
     const { turn } = useGame();
+
     return (
-        <div class="bg-black-500 rounded-[0.2rem] pb-[0.2rem]">
+        <div class="rounded-[0.2rem] bg-black-500 pb-[0.2rem]">
             <button class="flex cursor-default  gap-2 rounded-[0.2rem] bg-black-300 px-3 py-3 uppercase text-black-400">
                 <Show when={turn() === "o"}>
                     <svg
@@ -70,7 +71,7 @@ const BoardBox = (p: { type: TBoardItem; index: number }) => {
     };
 
     return (
-        <div class="bg-black-500 h-[99px] w-full rounded-md pb-2">
+        <div class="h-[99px] w-full rounded-md bg-black-500 pb-2">
             <button
                 onClick={handleClick}
                 class="h-full w-full cursor-default rounded-md bg-black-300 px-3  py-6 uppercase text-black-400"
