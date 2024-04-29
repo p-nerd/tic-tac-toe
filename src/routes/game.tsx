@@ -73,7 +73,7 @@ const BoardBox = (p: { type: TBoardItem; index: number }) => {
     return (
         <div class="h-[99px] w-full rounded-md bg-black-500 pb-2">
             <button
-                onClick={handleClick}
+                onclick={handleClick}
                 class="h-full w-full cursor-default rounded-md bg-black-300 px-3  py-6 uppercase text-black-400"
             >
                 <img

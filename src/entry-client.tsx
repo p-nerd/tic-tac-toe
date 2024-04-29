@@ -1,3 +1,5 @@
+import "solid-devtools";
+
 // @refresh reload
 import { mount, StartClient } from "@solidjs/start/client";
 
