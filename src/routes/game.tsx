@@ -5,7 +5,39 @@ import iconRestart from "~/assets/icon-restart.svg";
 import { For, Show } from "solid-js";
 import { TBoardItem, useGame } from "~/contexts/game_context";
 import { cn } from "~/libs/utils";
-import { calculateGameResult } from "~/logic/game";
+import { gameResult } from "~/algorithms/game";
+import { useNavigate } from "@solidjs/router";
+
+const GoBack = () => {
+    const navigate = useNavigate();
+    const { reset } = useGame();
+    return (
+        <div class="absolute left-2 top-2 flex px-4 pb-10 pt-8 lg:px-8">
+            <button
+                onclick={() => {
+                    reset();
+                    navigate("/");
+                }}
+                class="group flex text-sm font-semibold leading-6 text-slate-700 hover:text-slate-900 dark:text-slate-200 dark:hover:text-white"
+            >
+                <svg
+                    viewBox="0 -9 3 24"
+                    class="mr-3 h-6 w-auto overflow-visible text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300"
+                >
+                    <path
+                        d="M3 0L0 3L3 6"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    ></path>
+                </svg>
+                Go back
+            </button>
+        </div>
+    );
+};
 
 const WhichTurn = () => {
     const { turn } = useGame();
@@ -77,8 +109,8 @@ const BoardBox = (p: { type: TBoardItem; index: number }) => {
 
         setTurn(turn() === "x" ? "o" : "x");
 
-        const gameResult = calculateGameResult(board());
-        console.log(gameResult);
+        const result = gameResult(board());
+        console.log(result);
     };
 
     return (
@@ -111,6 +143,7 @@ const Game = () => {
 
     return (
         <main class="flex h-screen flex-col items-center justify-center bg-black-400 text-gray-400">
+            <GoBack />
             <section class="flex h-screen w-full flex-col items-center justify-center sm:w-[60%] md:h-[70vh] lg:w-[40%]">
                 <section class="mx-auto mb-10 flex w-[85%] items-center justify-between py-4">
                     <article class="flex gap-2">

@@ -1,7 +1,7 @@
 import iconX from "~/assets/icon-x.svg";
 import iconO from "~/assets/icon-o.svg";
 
-import { TTurn, useGame } from "~/contexts/game_context";
+import { type TTurn, useGame } from "~/contexts/game_context";
 import { cn } from "~/libs/utils";
 import { SelectOIcon, SelectXIcon } from "~/components/screens/home";
 import { useNavigate } from "@solidjs/router";
@@ -32,6 +32,7 @@ const PickFirstPlayerSymbol = () => {
 
 const StarButtons = () => {
     const navigate = useNavigate();
+
     return (
         <article class="flex w-[90%] flex-col gap-3">
             <div class="w-full rounded-2xl bg-yellow-500 pb-2">

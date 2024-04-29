@@ -1,6 +1,6 @@
 import { TBoardItem } from "~/contexts/game_context";
 
-export const calculateGameResult = (board: TBoardItem[]) => {
+export const gameResult = (board: TBoardItem[]) => {
     console.log(board);
     const grid = [
         [board[0], board[1], board[2]],

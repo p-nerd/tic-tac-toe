@@ -4,11 +4,21 @@ export type TTurn = "x" | "o";
 export type TBoardItem = TTurn | "";
 
 const makeGameContext = () => {
-    const [board, setBoard] = createSignal<TBoardItem[]>(["", "", "", "", "", "", "", "", ""]);
-    const [turn, setTurn] = createSignal<TTurn>("x");
-    const [firstPlayer, setFirstPlayer] = createSignal<TTurn>("x");
+    const defaultBoard: TBoardItem[] = ["", "", "", "", "", "", "", "", ""];
+    const defaultTurn: TTurn = "x";
+    const defaultFirstPlayer: TTurn = "x";
 
-    return { board, setBoard, turn, setTurn, firstPlayer, setFirstPlayer } as const;
+    const [board, setBoard] = createSignal<TBoardItem[]>(defaultBoard);
+    const [turn, setTurn] = createSignal<TTurn>(defaultTurn);
+    const [firstPlayer, setFirstPlayer] = createSignal<TTurn>(defaultFirstPlayer);
+
+    const reset = () => {
+        setBoard(defaultBoard);
+        setTurn(defaultTurn);
+        setFirstPlayer(defaultFirstPlayer);
+    };
+
+    return { board, setBoard, turn, setTurn, firstPlayer, setFirstPlayer, reset } as const;
 };
 
 type TGameContext = ReturnType<typeof makeGameContext>;
