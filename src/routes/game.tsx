@@ -110,7 +110,9 @@ const BoardBox = (p: { type: TBoardItem; index: number }) => {
         setTurn(turn() === "x" ? "o" : "x");
 
         const result = gameResult(board());
-        console.log(result);
+        if (result !== "") {
+            console.log("game over");
+        }
     };
 
     return (
