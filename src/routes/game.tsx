@@ -5,6 +5,7 @@ import iconRestart from "~/assets/icon-restart.svg";
 import { For, Show } from "solid-js";
 import { TBoardItem, useGame } from "~/contexts/game_context";
 import { cn } from "~/libs/utils";
+import { calculateGameResult } from "~/logic/game";
 
 const WhichTurn = () => {
     const { turn } = useGame();
@@ -68,6 +69,8 @@ const BoardBox = (p: { type: TBoardItem; index: number }) => {
     const handleClick = () => {
         setBoard(board().map((x, i) => (i === p.index ? turn() : x) as TBoardItem));
         setTurn(turn() === "x" ? "o" : "x");
+        const gameResult = calculateGameResult(board());
+        console.log(gameResult);
     };
 
     return (

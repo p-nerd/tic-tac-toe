@@ -4,7 +4,7 @@ export type TTurn = "x" | "o";
 export type TBoardItem = TTurn | "";
 
 const makeGameContext = () => {
-    const [board, setBoard] = createSignal<TBoardItem[]>([...Array(9).map(() => "" as TBoardItem)]);
+    const [board, setBoard] = createSignal<TBoardItem[]>(["", "", "", "", "", "", "", "", ""]);
     const [turn, setTurn] = createSignal<TTurn>("x");
     const [firstPlayer, setFirstPlayer] = createSignal<TTurn>("x");
 

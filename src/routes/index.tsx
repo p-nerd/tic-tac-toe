@@ -4,6 +4,7 @@ import iconO from "~/assets/icon-o.svg";
 import { TTurn, useGame } from "~/contexts/game_context";
 import { cn } from "~/libs/utils";
 import { SelectOIcon, SelectXIcon } from "~/components/screens/home";
+import { useNavigate } from "@solidjs/router";
 
 const PickFirstPlayerSymbol = () => {
     const { firstPlayer, setFirstPlayer } = useGame();
@@ -30,6 +31,7 @@ const PickFirstPlayerSymbol = () => {
 };
 
 const StarButtons = () => {
+    const navigate = useNavigate();
     return (
         <article class="flex w-[90%] flex-col gap-3">
             <div class="w-full rounded-2xl bg-yellow-500 pb-2">
@@ -39,7 +41,7 @@ const StarButtons = () => {
             </div>
             <div class="w-full rounded-2xl bg-blue-500 pb-2">
                 <button
-                    onclick={() => {}}
+                    onclick={() => navigate("/game")}
                     class="w-full cursor-default  rounded-2xl bg-blue-400 px-3 py-3 uppercase text-black-400"
                 >
                     new Game (vs player)
