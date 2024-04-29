@@ -66,9 +66,17 @@ const Restart = () => {
 const BoardBox = (p: { type: TBoardItem; index: number }) => {
     const { board, setBoard, turn, setTurn } = useGame();
 
-    const handleClick = () => {
-        setBoard(board().map((x, i) => (i === p.index ? turn() : x) as TBoardItem));
+    const handleTurn = () => {
+        if (board()[p.index] !== "") {
+            return;
+        }
+
+        const bb = [...board()];
+        bb[p.index] = turn();
+        setBoard(bb);
+
         setTurn(turn() === "x" ? "o" : "x");
+
         const gameResult = calculateGameResult(board());
         console.log(gameResult);
     };
@@ -76,7 +84,7 @@ const BoardBox = (p: { type: TBoardItem; index: number }) => {
     return (
         <div class="h-[99px] w-full rounded-md bg-black-500 pb-2">
             <button
-                onclick={handleClick}
+                onclick={handleTurn}
                 class="h-full w-full cursor-default rounded-md bg-black-300 px-3  py-6 uppercase text-black-400"
             >
                 <img
