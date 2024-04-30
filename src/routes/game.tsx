@@ -87,9 +87,16 @@ const WhichTurn = () => {
 };
 
 const Restart = () => {
+    const { setActive, setType } = useModal();
     return (
         <div class="rounded-md bg-gray-500 pb-1">
-            <button class="cursor-default rounded-md  bg-gray-400 px-3 py-3 pb-2 uppercase text-black-400">
+            <button
+                onclick={() => {
+                    setType("restart");
+                    setActive(true);
+                }}
+                class="cursor-default rounded-md  bg-gray-400 px-3 py-3 pb-2 uppercase text-black-400"
+            >
                 <img src={iconRestart} alt="" class="w-4" />
             </button>
         </div>
@@ -119,6 +126,19 @@ const BoardBox = (p: { type: TBoardItem; index: number }) => {
             setActive(true);
             setType("tied");
             setScore(prev => ({ ...prev, t: prev.t + 1 }));
+            return;
+        }
+        if (result === "x") {
+            setActive(true);
+            setType("xwin");
+            setScore(prev => ({ ...prev, x: prev.t + 1 }));
+            return;
+        }
+        if (result === "o") {
+            setActive(true);
+            setType("owin");
+            setScore(prev => ({ ...prev, o: prev.t + 1 }));
+            return;
         }
     };
 

@@ -22,7 +22,7 @@ const makeGameContext = () => {
         setScore(defaultScore);
     };
 
-    const nextRound = () => {
+    const resetGame = () => {
         setBoard(defaultBoard);
         setTurn(defaultTurn);
     };
@@ -37,7 +37,7 @@ const makeGameContext = () => {
         score,
         setScore,
         reset,
-        nextRound,
+        resetGame,
     } as const;
 };
 
