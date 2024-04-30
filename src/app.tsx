@@ -4,14 +4,22 @@ import { Router } from "@solidjs/router";
 import { FileRoutes } from "@solidjs/start/router";
 import { Suspense } from "solid-js";
 import { GameProvider } from "~/contexts/game_context";
+import { ModalProvider } from "./contexts/modal_context";
 
-export default function App() {
+import GameModal from "./components/modals/GameModal";
+
+const App = () => {
     return (
         <Router
             root={props => (
                 <>
                     <Suspense>
-                        <GameProvider>{props.children}</GameProvider>
+                        <ModalProvider>
+                            <GameProvider>
+                                <GameModal />
+                                {props.children}
+                            </GameProvider>
+                        </ModalProvider>
                     </Suspense>
                 </>
             )}
@@ -19,4 +27,6 @@ export default function App() {
             <FileRoutes />
         </Router>
     );
-}
+};
+
+export default App;

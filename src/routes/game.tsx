@@ -7,6 +7,7 @@ import { TBoardItem, useGame } from "~/contexts/game_context";
 import { cn } from "~/libs/utils";
 import { gameResult } from "~/algorithms/game";
 import { useNavigate } from "@solidjs/router";
+import { useModal } from "~/contexts/modal_context";
 
 const GoBack = () => {
     const navigate = useNavigate();
@@ -96,7 +97,8 @@ const Restart = () => {
 };
 
 const BoardBox = (p: { type: TBoardItem; index: number }) => {
-    const { board, setBoard, turn, setTurn } = useGame();
+    const { board, setBoard, turn, setTurn, setScore } = useGame();
+    const { setActive, setType } = useModal();
 
     const handleTurn = () => {
         if (board()[p.index] !== "") {
@@ -110,8 +112,13 @@ const BoardBox = (p: { type: TBoardItem; index: number }) => {
         setTurn(turn() === "x" ? "o" : "x");
 
         const result = gameResult(board());
-        if (result !== "") {
-            console.log("game over");
+        if (result === "") {
+            return;
+        }
+        if (result === "t") {
+            setActive(true);
+            setType("tied");
+            setScore(prev => ({ ...prev, t: prev.t + 1 }));
         }
     };
 
@@ -141,7 +148,7 @@ const FooterBox = (p: { class: string; label: string; score: number }) => {
 };
 
 const Game = () => {
-    const { board, firstPlayer } = useGame();
+    const { board, firstPlayer, score } = useGame();
 
     return (
         <main class="flex h-screen flex-col items-center justify-center bg-black-400 text-gray-400">
@@ -164,13 +171,13 @@ const Game = () => {
                     <FooterBox
                         class="bg-blue-400"
                         label={`x (${firstPlayer() === "x" ? "p1" : "p2"})`}
-                        score={0}
+                        score={score().x}
                     />
-                    <FooterBox class="bg-gray-400" label="ties" score={0} />
+                    <FooterBox class="bg-gray-400" label="ties" score={score().t} />
                     <FooterBox
                         class="bg-yellow-400"
                         label={`o (${firstPlayer() === "o" ? "p1" : "p2"})`}
-                        score={0}
+                        score={score().o}
                     />
                 </section>
             </section>

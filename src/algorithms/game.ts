@@ -1,6 +1,6 @@
 import { TBoardItem } from "~/contexts/game_context";
 
-export const gameResult = (board: TBoardItem[]): TBoardItem => {
+export const gameResult = (board: TBoardItem[]): "x" | "o" | "t" | "" => {
     // console.log(board);
     // const grid: TBoardItem[][] = [
     //     [board[0], board[1], board[2]],
@@ -26,5 +26,10 @@ export const gameResult = (board: TBoardItem[]): TBoardItem => {
             return board[possibility[0]];
         }
     }
-    return "";
+    for (const bItem of board) {
+        if (bItem === "") {
+            return "";
+        }
+    }
+    return "t";
 };
