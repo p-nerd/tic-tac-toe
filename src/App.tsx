@@ -8,6 +8,7 @@ import { ModalProvider } from "~/contexts/modal_context";
 import GameModal from "~/components/GameModal";
 import Game from "~/routes/game";
 import Home from "~/routes";
+import NotFound from "~/routes/[...404]";
 
 const Providers = (props: { children: JSXElement }) => {
     return (
@@ -27,6 +28,7 @@ const App = () => {
         <Router root={Providers as any}>
             <Route path="/game" component={Game} />
             <Route path="/" component={Home} />
+            <Route path="*404" component={NotFound} />
         </Router>
     );
 };
