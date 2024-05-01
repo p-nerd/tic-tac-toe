@@ -32,7 +32,7 @@ const PickFirstPlayerSymbol = () => {
 
 const StarButtons = () => {
     const navigate = useNavigate();
-    const { setGameType } = useGame();
+    const { setGameType, setPlayerNames } = useGame();
 
     return (
         <article class="flex w-[90%] flex-col gap-3">
@@ -40,17 +40,19 @@ const StarButtons = () => {
                 <button
                     onclick={() => {
                         setGameType("bot");
+                        setPlayerNames({ p1: "You", p2: "Bot" });
                         navigate("/game");
                     }}
                     class="w-full cursor-default  rounded-2xl bg-yellow-400 px-3 py-3 uppercase text-black-400"
                 >
-                    new game (vs cpu)
+                    new game (vs bot)
                 </button>
             </div>
             <div class="w-full rounded-2xl bg-blue-500 pb-2">
                 <button
                     onclick={() => {
                         setGameType("humen");
+                        setPlayerNames({ p1: "Player 1", p2: "Player 2" });
                         navigate("/game");
                     }}
                     class="w-full cursor-default  rounded-2xl bg-blue-400 px-3 py-3 uppercase text-black-400"

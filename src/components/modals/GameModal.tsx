@@ -11,7 +11,7 @@ const GameModal = () => {
     const navigate = useNavigate();
 
     const { active, type, reset: modalReset, setActive } = useModal();
-    const { reset: gameReset, resetGame, firstPlayer } = useGame();
+    const { reset: gameReset, resetGame, firstPlayer, playerNames } = useGame();
 
     return (
         <Show when={active()}>
@@ -25,10 +25,16 @@ const GameModal = () => {
                                     <Show when={type() === "tied"}>round tied</Show>
                                     <Show when={type() === "restart"}>restart game?</Show>
                                     <Show when={type() === "xwin"}>
-                                        player {firstPlayer() === "x" ? 1 : 2} wins!
+                                        {firstPlayer() === "x"
+                                            ? playerNames().p1
+                                            : playerNames().p2}{" "}
+                                        wins!
                                     </Show>
                                     <Show when={type() === "owin"}>
-                                        player {firstPlayer() === "o" ? 1 : 2} wins!
+                                        {firstPlayer() === "o"
+                                            ? playerNames().p1
+                                            : playerNames().p2}{" "}
+                                        wins!
                                     </Show>
                                 </h4>
                                 <Show when={type() === "xwin" || type() === "owin"}>

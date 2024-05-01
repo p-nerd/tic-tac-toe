@@ -198,7 +198,7 @@ const Board = () => {
 };
 
 const Game = () => {
-    const { firstPlayer, score } = useGame();
+    const { firstPlayer, score, playerNames } = useGame();
 
     return (
         <main class="flex h-screen flex-col items-center justify-center bg-black-400 text-gray-400">
@@ -216,13 +216,13 @@ const Game = () => {
                 <section class="mx-auto grid w-[90%] grid-cols-3 gap-5">
                     <FooterBox
                         class="bg-blue-400"
-                        label={`x (${firstPlayer() === "x" ? "p1" : "p2"})`}
+                        label={`x (${firstPlayer() === "x" ? playerNames().p1 : playerNames().p2})`}
                         score={score().x}
                     />
                     <FooterBox class="bg-gray-400" label="ties" score={score().t} />
                     <FooterBox
                         class="bg-yellow-400"
-                        label={`o (${firstPlayer() === "o" ? "p1" : "p2"})`}
+                        label={`o (${firstPlayer() === "o" ? playerNames().p1 : playerNames().p2})`}
                         score={score().o}
                     />
                 </section>

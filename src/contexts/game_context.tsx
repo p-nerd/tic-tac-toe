@@ -4,6 +4,7 @@ export type TGameType = "humen" | "bot";
 export type TTurn = "x" | "o";
 export type TBoardItem = TTurn | "";
 export type TScore = { x: number; o: number; t: number };
+export type TPlayerNames = { p1: string; p2: string };
 
 const makeGameContext = () => {
     const defaultGameType: TGameType = "bot";
@@ -11,12 +12,14 @@ const makeGameContext = () => {
     const defaultTurn: TTurn = "x";
     const defaultFirstPlayer: TTurn = "x";
     const defaultScore: TScore = { x: 0, o: 0, t: 0 };
+    const defaultPlayerNames = { p1: "You", p2: "Bot" };
 
     const [gameType, setGameType] = createSignal<TGameType>(defaultGameType);
     const [board, setBoard] = createSignal<TBoardItem[]>(defaultBoard);
     const [turn, setTurn] = createSignal<TTurn>(defaultTurn);
     const [firstPlayer, setFirstPlayer] = createSignal<TTurn>(defaultFirstPlayer);
     const [score, setScore] = createSignal<TScore>(defaultScore);
+    const [playerNames, setPlayerNames] = createSignal<TPlayerNames>(defaultPlayerNames);
 
     const reset = () => {
         setGameType(defaultGameType);
@@ -24,6 +27,7 @@ const makeGameContext = () => {
         setTurn(defaultTurn);
         setFirstPlayer(defaultFirstPlayer);
         setScore(defaultScore);
+        setPlayerNames(defaultPlayerNames);
     };
 
     const resetGame = () => {
@@ -42,6 +46,8 @@ const makeGameContext = () => {
         setFirstPlayer,
         score,
         setScore,
+        playerNames,
+        setPlayerNames,
         reset,
         resetGame,
     } as const;
