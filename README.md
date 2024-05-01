@@ -4,21 +4,21 @@ Tic Tac Toe Game build with SolidJS
 
 ## Links
 
-- Live: https://tic-tac-toe.developershihab.com
-- Description: https://developershihab.com/projects/tic-tac-toe
+-   Live: https://tic-tac-toe.developershihab.com
+-   Description: https://developershihab.com/projects/tic-tac-toe
 
 ## Features
 
--  Bot player (Implemented with Minimax Algorithm)
--  Multi-plyer support
+-   Bot player (Implemented with Minimax Algorithm)
+-   Multi-plyer support
 
 ## Built with
 
-- [SolidJS](https://www.solidjs.com) -> UI Library
-- [SolidStart](https://start.solidjs.com) -> Meta Framework
-- [TypeScript](https://www.typescriptlang.org) -> Programming Language
-- [TailwindCSS](https://tailwindcss.com) -> CSS Library
+-   [SolidJS](https://www.solidjs.com) -> UI Library
+-   [Vite](https://vitejs.dev) -> Build Tool
+-   [TypeScript](https://www.typescriptlang.org) -> Programming Language
+-   [TailwindCSS](https://tailwindcss.com) -> CSS Library
 
 ## Credits
 
-- Design inspired by: [g1alexander/tic-tac-toe](https://github.com/g1alexander/tic-tac-toe)
+-   Design inspired by: [g1alexander/tic-tac-toe](https://github.com/g1alexander/tic-tac-toe)
