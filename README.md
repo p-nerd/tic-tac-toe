@@ -2,21 +2,23 @@
 
 Tic Tac Toe Game build with SolidJS
 
-## Live Link: https://tic-tac-toe.developershihab.com
+## Links
 
-## Developing
+- Live: https://tic-tac-toe.developershihab.com
+- Description: https://developershihab.com/projects/tic-tac-toe
 
-Installed dependencies with `pnpm install`, start a development server:
+## Features
 
-```bash
-npm run dev
+-  Bot player (Implemented with Minimax Algorithm)
+-  Multi-plyer support
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## Built with
 
-## Building
+- [SolidJS](https://www.solidjs.com) -> UI Library
+- [SolidStart](https://start.solidjs.com) -> Meta Framework
+- [TypeScript](https://www.typescriptlang.org) -> Programming Language
+- [TailwindCSS](https://tailwindcss.com) -> CSS Library
 
-Solid apps are built with _presets_, which optimise your project for deployment to different environments.
+## Credits
 
-By default, `npm run build` will generate a Node app that you can run with `npm start`. To use a different preset, add it to the `devDependencies` in `package.json` and specify in your `app.config.js`.
+- Design inspired by: [g1alexander/tic-tac-toe](https://github.com/g1alexander/tic-tac-toe)
