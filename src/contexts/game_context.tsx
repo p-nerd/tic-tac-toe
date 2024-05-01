@@ -1,21 +1,23 @@
 import { createSignal, createContext, useContext, JSXElement } from "solid-js";
 
+export type TSpot = "x" | "o" | "";
+export type TBoard = TSpot[];
+
 export type TGameType = "humen" | "bot";
 export type TTurn = "x" | "o";
-export type TBoardItem = TTurn | "";
 export type TScore = { x: number; o: number; t: number };
 export type TPlayerNames = { p1: string; p2: string };
 
 const makeGameContext = () => {
     const defaultGameType: TGameType = "bot";
-    const defaultBoard: TBoardItem[] = ["", "", "", "", "", "", "", "", ""];
+    const defaultBoard: TBoard = ["", "", "", "", "", "", "", "", ""];
     const defaultTurn: TTurn = "x";
     const defaultFirstPlayer: TTurn = "x";
     const defaultScore: TScore = { x: 0, o: 0, t: 0 };
     const defaultPlayerNames = { p1: "You", p2: "Bot" };
 
     const [gameType, setGameType] = createSignal<TGameType>(defaultGameType);
-    const [board, setBoard] = createSignal<TBoardItem[]>(defaultBoard);
+    const [board, setBoard] = createSignal<TBoard>(defaultBoard);
     const [turn, setTurn] = createSignal<TTurn>(defaultTurn);
     const [firstPlayer, setFirstPlayer] = createSignal<TTurn>(defaultFirstPlayer);
     const [score, setScore] = createSignal<TScore>(defaultScore);

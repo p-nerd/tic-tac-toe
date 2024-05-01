@@ -180,7 +180,7 @@ const Home = () => {
     const { setGameType, setPlayerNames } = useGame();
 
     return (
-        <main class="flex h-screen flex-col items-center justify-center bg-black-400 text-gray-400">
+        <main class="flex min-h-screen flex-col items-center justify-center bg-black-400 text-gray-400">
             <Show when={!isVsPlayerClicked()}>
                 <section class="flex h-[70vh] w-full flex-col items-center justify-center gap-10 sm:w-[60%] lg:w-[40%]">
                     <article class="flex gap-2">

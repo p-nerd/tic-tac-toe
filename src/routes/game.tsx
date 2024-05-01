@@ -3,7 +3,7 @@ import iconO from "~/assets/icon-o.svg";
 import iconRestart from "~/assets/icon-restart.svg";
 
 import { For, Show, onMount } from "solid-js";
-import { TBoardItem, useGame } from "~/contexts/game_context";
+import { TSpot, useGame } from "~/contexts/game_context";
 import { cn } from "~/libs/utils";
 import { gameResult } from "~/algorithms/game";
 import { useNavigate } from "@solidjs/router";
@@ -105,7 +105,7 @@ const Restart = () => {
     );
 };
 
-const BoardBox = (p: { type: TBoardItem; onclick: () => void }) => {
+const BoardBox = (p: { type: TSpot; onclick: () => void }) => {
     return (
         <div class="h-[99px] w-full rounded-md bg-black-500 pb-2">
             <button
@@ -201,9 +201,9 @@ const Game = () => {
     const { firstPlayer, score, playerNames } = useGame();
 
     return (
-        <main class="flex h-screen flex-col items-center justify-center bg-black-400 text-gray-400">
+        <main class="flex min-h-screen flex-col items-center justify-center bg-black-400 text-gray-400">
             <GoBack />
-            <section class="flex h-screen w-full flex-col items-center justify-center sm:w-[60%] md:h-[70vh] lg:w-[40%]">
+            <section class="flex w-full flex-col items-center justify-center sm:w-[60%] md:h-[70vh] lg:w-[40%]">
                 <section class="mx-auto mb-10 flex w-[85%] items-center justify-between py-4">
                     <article class="flex gap-2">
                         <img src={iconX} alt="icon-x" class="h-7 w-7" />
