@@ -179,9 +179,8 @@ const Board = () => {
     };
 
     onMount(() => {
-        console.log();
         if (gameType() === "bot" && firstPlayer() === "o") {
-            takeTurn(bot(board(), botPlayer(), diffeculty()));
+            takeTurn(Math.floor(Math.random() * board().length));
         }
     });
 
