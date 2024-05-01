@@ -1,4 +1,4 @@
-import { createSignal, createContext, useContext, JSXElement, Show } from "solid-js";
+import { createSignal, createContext, useContext, JSXElement } from "solid-js";
 
 export type TModalType = "tied" | "restart" | "xwin" | "owin";
 
