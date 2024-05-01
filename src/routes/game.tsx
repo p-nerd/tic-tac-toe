@@ -155,21 +155,21 @@ const Board = () => {
                     setActive(true);
                     setType("tied");
                     setScore(prev => ({ ...prev, t: prev.t + 1 }));
-                }, 750);
+                }, 500);
                 return "game-over";
             case "x":
                 setTimeout(() => {
                     setActive(true);
                     setType("xwin");
                     setScore(prev => ({ ...prev, x: prev.x + 1 }));
-                }, 750);
+                }, 500);
                 return "game-over";
             case "o":
                 setTimeout(() => {
                     setActive(true);
                     setType("owin");
                     setScore(prev => ({ ...prev, o: prev.o + 1 }));
-                }, 750);
+                }, 500);
                 return "game-over";
         }
     };
