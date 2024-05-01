@@ -2,12 +2,14 @@ import iconX from "~/assets/icon-x.svg";
 import iconO from "~/assets/icon-o.svg";
 import iconRestart from "~/assets/icon-restart.svg";
 
-import { For, Show } from "solid-js";
+import { For, Show, onMount } from "solid-js";
 import { TBoardItem, useGame } from "~/contexts/game_context";
 import { cn } from "~/libs/utils";
 import { gameResult } from "~/algorithms/game";
 import { useNavigate } from "@solidjs/router";
 import { useModal } from "~/contexts/modal_context";
+
+import bot from "~/algorithms/bot";
 
 const GoBack = () => {
     const navigate = useNavigate();
@@ -103,49 +105,11 @@ const Restart = () => {
     );
 };
 
-const BoardBox = (p: { type: TBoardItem; index: number }) => {
-    const { board, setBoard, turn, setTurn, setScore } = useGame();
-    const { setActive, setType } = useModal();
-
-    const handleTurn = () => {
-        if (board()[p.index] !== "") {
-            return;
-        }
-
-        const bb = [...board()];
-        bb[p.index] = turn();
-        setBoard(bb);
-
-        setTurn(turn() === "x" ? "o" : "x");
-
-        const result = gameResult(board());
-        if (result === "") {
-            return;
-        }
-        if (result === "t") {
-            setActive(true);
-            setType("tied");
-            setScore(prev => ({ ...prev, t: prev.t + 1 }));
-            return;
-        }
-        if (result === "x") {
-            setActive(true);
-            setType("xwin");
-            setScore(prev => ({ ...prev, x: prev.t + 1 }));
-            return;
-        }
-        if (result === "o") {
-            setActive(true);
-            setType("owin");
-            setScore(prev => ({ ...prev, o: prev.t + 1 }));
-            return;
-        }
-    };
-
+const BoardBox = (p: { type: TBoardItem; onclick: () => void }) => {
     return (
         <div class="h-[99px] w-full rounded-md bg-black-500 pb-2">
             <button
-                onclick={handleTurn}
+                onclick={p.onclick}
                 class="h-full w-full cursor-default rounded-md bg-black-300 px-3  py-6 uppercase text-black-400"
             >
                 <img
@@ -167,8 +131,74 @@ const FooterBox = (p: { class: string; label: string; score: number }) => {
     );
 };
 
+const Board = () => {
+    const { board, setBoard, turn, setTurn, setScore, gameType, firstPlayer } = useGame();
+    const { setActive, setType } = useModal();
+
+    const takeTurn = (boardIndex: number): "game-over" | undefined => {
+        if (board()[boardIndex] !== "") {
+            return;
+        }
+
+        const bb = [...board()];
+        bb[boardIndex] = turn();
+        setBoard(bb);
+
+        setTurn(turn() === "x" ? "o" : "x");
+
+        const result = gameResult(board());
+        if (result === "") {
+            return;
+        }
+        if (result === "t") {
+            setActive(true);
+            setType("tied");
+            setScore(prev => ({ ...prev, t: prev.t + 1 }));
+            return "game-over";
+        }
+        if (result === "x") {
+            setActive(true);
+            setType("xwin");
+            setScore(prev => ({ ...prev, x: prev.t + 1 }));
+            return "game-over";
+        }
+        if (result === "o") {
+            setActive(true);
+            setType("owin");
+            setScore(prev => ({ ...prev, o: prev.t + 1 }));
+            return "game-over";
+        }
+    };
+
+    onMount(() => {
+        if (gameType() === "bot" && firstPlayer() !== "x") {
+            takeTurn(bot(board()));
+        }
+    });
+
+    return (
+        <section class="mx-auto mb-10 grid w-[90%] grid-cols-3 gap-5">
+            <For each={board()}>
+                {(bb, index) => (
+                    <BoardBox
+                        type={bb}
+                        onclick={() => {
+                            if (takeTurn(index()) === "game-over") {
+                                return;
+                            }
+                            if (gameType() === "bot") {
+                                takeTurn(bot(board()));
+                            }
+                        }}
+                    />
+                )}
+            </For>
+        </section>
+    );
+};
+
 const Game = () => {
-    const { board, firstPlayer, score } = useGame();
+    const { firstPlayer, score } = useGame();
 
     return (
         <main class="flex h-screen flex-col items-center justify-center bg-black-400 text-gray-400">
@@ -182,11 +212,7 @@ const Game = () => {
                     <WhichTurn />
                     <Restart />
                 </section>
-                <section class="mx-auto mb-10 grid w-[90%] grid-cols-3 gap-5">
-                    <For each={board()}>
-                        {(bb, index) => <BoardBox type={bb} index={index()} />}
-                    </For>
-                </section>
+                <Board />
                 <section class="mx-auto grid w-[90%] grid-cols-3 gap-5">
                     <FooterBox
                         class="bg-blue-400"
