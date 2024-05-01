@@ -97,7 +97,7 @@ const Restart = () => {
                     setType("restart");
                     setActive(true);
                 }}
-                class="cursor-default rounded-md  bg-gray-400 px-3 py-3 pb-2 uppercase text-black-400"
+                class="rounded-md  bg-gray-400 px-3 py-3 pb-2 uppercase text-black-400"
             >
                 <img src={iconRestart} alt="" class="w-4" />
             </button>
@@ -110,7 +110,7 @@ const BoardBox = (p: { type: TBoardItem; onclick: () => void }) => {
         <div class="h-[99px] w-full rounded-md bg-black-500 pb-2">
             <button
                 onclick={p.onclick}
-                class="h-full w-full cursor-default rounded-md bg-black-300 px-3  py-6 uppercase text-black-400"
+                class="h-full w-full rounded-md bg-black-300 px-3  py-6 uppercase text-black-400"
             >
                 <img
                     src={p.type === "x" ? iconX : p.type === "o" ? iconO : ""}
@@ -125,7 +125,7 @@ const BoardBox = (p: { type: TBoardItem; onclick: () => void }) => {
 const FooterBox = (p: { class: string; label: string; score: number }) => {
     return (
         <button class={cn("cursor-default rounded-lg px-7 py-3 uppercase text-black-400", p.class)}>
-            <span class="block text-xs uppercase">{p.label}</span>
+            <span class="block text-xs">{p.label}</span>
             <span class="block font-bold">{p.score}</span>
         </button>
     );
