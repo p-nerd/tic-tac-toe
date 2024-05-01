@@ -2,7 +2,7 @@ import iconX from "~/assets/icon-x.svg";
 import iconO from "~/assets/icon-o.svg";
 import iconRestart from "~/assets/icon-restart.svg";
 
-import { For, Show, onMount } from "solid-js";
+import { For, Show, createEffect, onMount } from "solid-js";
 import { TBoardItem, useGame } from "~/contexts/game_context";
 import { cn } from "~/libs/utils";
 import { gameResult } from "~/algorithms/game";
@@ -132,8 +132,12 @@ const FooterBox = (p: { class: string; label: string; score: number }) => {
 };
 
 const Board = () => {
-    const { board, setBoard, turn, setTurn, setScore, gameType, firstPlayer } = useGame();
+    const { board, setBoard, turn, setTurn, score, setScore, gameType, firstPlayer } = useGame();
     const { setActive, setType } = useModal();
+
+    createEffect(() => {
+        console.log(score());
+    });
 
     const takeTurn = (boardIndex: number): "game-over" | undefined => {
         if (board()[boardIndex] !== "") {
@@ -159,13 +163,13 @@ const Board = () => {
         if (result === "x") {
             setActive(true);
             setType("xwin");
-            setScore(prev => ({ ...prev, x: prev.t + 1 }));
+            setScore(prev => ({ ...prev, x: prev.x + 1 }));
             return "game-over";
         }
         if (result === "o") {
             setActive(true);
             setType("owin");
-            setScore(prev => ({ ...prev, o: prev.t + 1 }));
+            setScore(prev => ({ ...prev, o: prev.o + 1 }));
             return "game-over";
         }
     };
