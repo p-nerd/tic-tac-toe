@@ -16,11 +16,11 @@ const result = (board: TBoard): "x" | "o" | "t" | "" => {
             board[possibility[0]] === board[possibility[1]] &&
             board[possibility[1]] === board[possibility[2]]
         ) {
-            return board[possibility[0]];
+            return board[possibility[0]] as any;
         }
     }
     for (const bItem of board) {
-        if (bItem === "") {
+        if (typeof bItem === "number") {
             return "";
         }
     }

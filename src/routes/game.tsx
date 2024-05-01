@@ -2,9 +2,9 @@ import iconX from "~/assets/icon-x.svg";
 import iconO from "~/assets/icon-o.svg";
 import iconRestart from "~/assets/icon-restart.svg";
 
-import { For, Show, onMount } from "solid-js";
+import { For, Show, createEffect, onMount } from "solid-js";
 import { useNavigate } from "@solidjs/router";
-import { type TSpot, useGame } from "~/contexts/game_context";
+import { type TSpot, useGame, TSymbol } from "~/contexts/game_context";
 import { useModal } from "~/contexts/modal_context";
 import { cn } from "~/libs/utils";
 
@@ -132,11 +132,12 @@ const FooterBox = (p: { class: string; label: string; score: number }) => {
 };
 
 const Board = () => {
-    const { board, setBoard, turn, setTurn, setScore, gameType, firstPlayer } = useGame();
+    const { board, setBoard, turn, setTurn, setScore, gameType, firstPlayer, diffeculty } =
+        useGame();
     const { setActive, setType } = useModal();
 
     const takeTurn = (boardIndex: number): "game-over" | undefined => {
-        if (board()[boardIndex] !== "") {
+        if (typeof board()[boardIndex] !== "number") {
             return;
         }
 
@@ -150,26 +151,37 @@ const Board = () => {
             case "":
                 return;
             case "t":
-                setActive(true);
-                setType("tied");
-                setScore(prev => ({ ...prev, t: prev.t + 1 }));
+                setTimeout(() => {
+                    setActive(true);
+                    setType("tied");
+                    setScore(prev => ({ ...prev, t: prev.t + 1 }));
+                }, 750);
                 return "game-over";
             case "x":
-                setActive(true);
-                setType("xwin");
-                setScore(prev => ({ ...prev, x: prev.x + 1 }));
+                setTimeout(() => {
+                    setActive(true);
+                    setType("xwin");
+                    setScore(prev => ({ ...prev, x: prev.x + 1 }));
+                }, 750);
                 return "game-over";
             case "o":
-                setActive(true);
-                setType("owin");
-                setScore(prev => ({ ...prev, o: prev.o + 1 }));
+                setTimeout(() => {
+                    setActive(true);
+                    setType("owin");
+                    setScore(prev => ({ ...prev, o: prev.o + 1 }));
+                }, 750);
                 return "game-over";
         }
     };
 
+    const botPlayer = (): TSymbol => {
+        return firstPlayer() === "x" ? "o" : "x";
+    };
+
     onMount(() => {
-        if (gameType() === "bot" && firstPlayer() !== "x") {
-            takeTurn(bot(board()));
+        console.log();
+        if (gameType() === "bot" && firstPlayer() === "o") {
+            takeTurn(bot(board(), botPlayer(), diffeculty()));
         }
     });
 
@@ -184,7 +196,7 @@ const Board = () => {
                                 return;
                             }
                             if (gameType() === "bot") {
-                                takeTurn(bot(board()));
+                                takeTurn(bot(board(), botPlayer(), diffeculty()));
                             }
                         }}
                     />
@@ -195,7 +207,13 @@ const Board = () => {
 };
 
 const Game = () => {
-    const { firstPlayer, score, playerNames } = useGame();
+    const { firstPlayer, score, playerNames, nextRound, setNextRound } = useGame();
+
+    createEffect(() => {
+        if (nextRound()) {
+            setNextRound(false);
+        }
+    });
 
     return (
         <main class="flex min-h-screen flex-col items-center justify-center bg-black-400 text-gray-400">
@@ -209,7 +227,9 @@ const Game = () => {
                     <WhichTurn />
                     <Restart />
                 </section>
-                <Board />
+                <Show when={!nextRound()}>
+                    <Board />
+                </Show>
                 <section class="mx-auto grid w-[90%] grid-cols-3 gap-5">
                     <FooterBox
                         class="bg-blue-400"
