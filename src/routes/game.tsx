@@ -3,12 +3,12 @@ import iconO from "~/assets/icon-o.svg";
 import iconRestart from "~/assets/icon-restart.svg";
 
 import { For, Show, onMount } from "solid-js";
-import { TSpot, useGame } from "~/contexts/game_context";
-import { cn } from "~/libs/utils";
-import { gameResult } from "~/algorithms/game";
 import { useNavigate } from "@solidjs/router";
+import { type TSpot, useGame } from "~/contexts/game_context";
 import { useModal } from "~/contexts/modal_context";
+import { cn } from "~/libs/utils";
 
+import result from "~/algorithms/result";
 import bot from "~/algorithms/bot";
 
 const GoBack = () => {
@@ -146,27 +146,24 @@ const Board = () => {
 
         setTurn(turn() === "x" ? "o" : "x");
 
-        const result = gameResult(board());
-        if (result === "") {
-            return;
-        }
-        if (result === "t") {
-            setActive(true);
-            setType("tied");
-            setScore(prev => ({ ...prev, t: prev.t + 1 }));
-            return "game-over";
-        }
-        if (result === "x") {
-            setActive(true);
-            setType("xwin");
-            setScore(prev => ({ ...prev, x: prev.x + 1 }));
-            return "game-over";
-        }
-        if (result === "o") {
-            setActive(true);
-            setType("owin");
-            setScore(prev => ({ ...prev, o: prev.o + 1 }));
-            return "game-over";
+        switch (result(board())) {
+            case "":
+                return;
+            case "t":
+                setActive(true);
+                setType("tied");
+                setScore(prev => ({ ...prev, t: prev.t + 1 }));
+                return "game-over";
+            case "x":
+                setActive(true);
+                setType("xwin");
+                setScore(prev => ({ ...prev, x: prev.x + 1 }));
+                return "game-over";
+            case "o":
+                setActive(true);
+                setType("owin");
+                setScore(prev => ({ ...prev, o: prev.o + 1 }));
+                return "game-over";
         }
     };
 

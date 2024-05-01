@@ -1,6 +1,6 @@
 import { createSignal, createContext, useContext, JSXElement } from "solid-js";
 
-export type TModalType = "tied" | "restart" | "xwin" | "owin";
+type TModalType = "tied" | "restart" | "xwin" | "owin";
 
 const makeModalContext = () => {
     const defaultActive: boolean = false;

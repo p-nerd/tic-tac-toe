@@ -1,35 +1,40 @@
 import { createSignal, createContext, useContext, JSXElement } from "solid-js";
 
-export type TSpot = "x" | "o" | "";
+type TGameType = "humen" | "bot";
+type TPlayerNames = { p1: string; p2: string };
+
+export type TSymbol = "x" | "o";
+export type TSpot = TSymbol | "";
 export type TBoard = TSpot[];
 
-export type TGameType = "humen" | "bot";
-export type TTurn = "x" | "o";
-export type TScore = { x: number; o: number; t: number };
-export type TPlayerNames = { p1: string; p2: string };
+type TScore = { x: number; o: number; t: number };
 
 const makeGameContext = () => {
     const defaultGameType: TGameType = "bot";
+    const defaultPlayerNames: TPlayerNames = { p1: "You", p2: "Bot" };
+
     const defaultBoard: TBoard = ["", "", "", "", "", "", "", "", ""];
-    const defaultTurn: TTurn = "x";
-    const defaultFirstPlayer: TTurn = "x";
+    const defaultTurn: TSymbol = "x";
+    const defaultFirstPlayer: TSymbol = "x";
+
     const defaultScore: TScore = { x: 0, o: 0, t: 0 };
-    const defaultPlayerNames = { p1: "You", p2: "Bot" };
 
     const [gameType, setGameType] = createSignal<TGameType>(defaultGameType);
-    const [board, setBoard] = createSignal<TBoard>(defaultBoard);
-    const [turn, setTurn] = createSignal<TTurn>(defaultTurn);
-    const [firstPlayer, setFirstPlayer] = createSignal<TTurn>(defaultFirstPlayer);
-    const [score, setScore] = createSignal<TScore>(defaultScore);
     const [playerNames, setPlayerNames] = createSignal<TPlayerNames>(defaultPlayerNames);
+
+    const [turn, setTurn] = createSignal<TSymbol>(defaultTurn);
+    const [firstPlayer, setFirstPlayer] = createSignal<TSymbol>(defaultFirstPlayer);
+    const [board, setBoard] = createSignal<TBoard>(defaultBoard);
+
+    const [score, setScore] = createSignal<TScore>(defaultScore);
 
     const reset = () => {
         setGameType(defaultGameType);
-        setBoard(defaultBoard);
+        setPlayerNames(defaultPlayerNames);
         setTurn(defaultTurn);
         setFirstPlayer(defaultFirstPlayer);
+        setBoard(defaultBoard);
         setScore(defaultScore);
-        setPlayerNames(defaultPlayerNames);
     };
 
     const resetGame = () => {

@@ -1,8 +1,8 @@
 import iconX from "~/assets/icon-x.svg";
 import iconO from "~/assets/icon-o.svg";
 
-import { useNavigate } from "@solidjs/router";
 import { Show } from "solid-js";
+import { useNavigate } from "@solidjs/router";
 import { useGame } from "~/contexts/game_context";
 import { useModal } from "~/contexts/modal_context";
 import { cn } from "~/libs/utils";

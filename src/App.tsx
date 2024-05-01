@@ -1,16 +1,11 @@
-import "./app.css";
-
-import { JSXElement, Suspense } from "solid-js";
+import { type JSXElement, Suspense, lazy } from "solid-js";
 import { Route, Router } from "@solidjs/router";
 import { GameProvider } from "~/contexts/game_context";
 import { ModalProvider } from "~/contexts/modal_context";
 
 import GameModal from "~/components/GameModal";
-import Game from "~/routes/game";
-import Home from "~/routes";
-import NotFound from "~/routes/[...404]";
 
-const Providers = (props: { children: JSXElement }) => {
+const Layout = (props: { children: JSXElement }) => {
     return (
         <Suspense>
             <ModalProvider>
@@ -23,9 +18,13 @@ const Providers = (props: { children: JSXElement }) => {
     );
 };
 
+const Game = lazy(() => import("~/routes/game"));
+const Home = lazy(() => import("~/routes/index"));
+const NotFound = lazy(() => import("~/routes/[...404]"));
+
 const App = () => {
     return (
-        <Router root={Providers as any}>
+        <Router root={Layout as any}>
             <Route path="/game" component={Game} />
             <Route path="/" component={Home} />
             <Route path="*404" component={NotFound} />

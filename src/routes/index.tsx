@@ -1,10 +1,10 @@
 import iconX from "~/assets/icon-x.svg";
 import iconO from "~/assets/icon-o.svg";
 
-import { type TTurn, useGame } from "~/contexts/game_context";
-import { cn } from "~/libs/utils";
-import { useNavigate } from "@solidjs/router";
 import { Show, createSignal } from "solid-js";
+import { useNavigate } from "@solidjs/router";
+import { type TSymbol, useGame } from "~/contexts/game_context";
+import { cn } from "~/libs/utils";
 
 const SelectXIcon = (p: { active: boolean }) => {
     return (
@@ -71,7 +71,7 @@ const SelectOIcon = (p: { active: boolean }) => {
 const PickFirstPlayerSymbol = () => {
     const { firstPlayer, setFirstPlayer } = useGame();
 
-    const buttonClass = (symbol: TTurn) =>
+    const buttonClass = (symbol: TSymbol) =>
         cn("mx-auto flex w-1/2 items-center justify-center", {
             "ml-3 rounded-lg bg-gray-400 px-3 py-3": firstPlayer() === symbol,
         });

@@ -1,6 +1,6 @@
-import type { TBoard } from "~/contexts/game_context";
+import { type TSymbol, type TBoard } from "~/contexts/game_context";
 
-type TIndexedSpot = "x" | "o" | number;
+type TIndexedSpot = TSymbol | number;
 type TIndexedBoard = TIndexedSpot[];
 
 /**
