@@ -3,8 +3,10 @@ import iconO from "~/assets/icon-o.svg";
 
 import { Show, createSignal } from "solid-js";
 import { useNavigate } from "@solidjs/router";
-import { type TSymbol, useGame } from "~/contexts/game_context";
+import { type TSymbol, useGame, TDifficulty } from "~/contexts/game_context";
 import { cn } from "~/libs/utils";
+
+import GoBack from "~/components/GoBack";
 
 const SelectXIcon = (p: { active: boolean }) => {
     return (
@@ -125,10 +127,21 @@ const Input = (p: {
         <input
             id={p.id}
             type="text"
-            class="w-52 rounded-md bg-gray-700 p-3 focus:outline-none"
+            class="w-64 rounded-md bg-gray-700 p-3 focus:outline-none"
             placeholder={p.placeholder}
             onChange={e => p.onChange(e.target.value)}
         />
+    );
+};
+
+const PlayButton = (p: { onclick: () => void }) => {
+    return (
+        <button
+            onclick={p.onclick}
+            class="w-full rounded-2xl bg-blue-400 px-3 py-3 uppercase text-black-400"
+        >
+            Play
+        </button>
     );
 };
 
@@ -156,7 +169,7 @@ const InputPlayersName = (p: { onPlay: () => void }) => {
             <Show when={errorMessage()}>
                 <div class="text-red-500">{errorMessage()}</div>
             </Show>
-            <button
+            <PlayButton
                 onclick={() => {
                     if (player1() === "" || player2() === "") {
                         setErrorMessage("Names is required");
@@ -165,23 +178,59 @@ const InputPlayersName = (p: { onPlay: () => void }) => {
                     setPlayerNames({ p1: player1(), p2: player2() });
                     p.onPlay();
                 }}
-                class="w-full rounded-2xl bg-blue-400 px-3 py-3 uppercase text-black-400"
-            >
-                Play
-            </button>
+            />
+        </div>
+    );
+};
+
+const DifficultyButton = (p: { value: TDifficulty }) => {
+    const { diffeculty, setDiffeculty } = useGame();
+    return (
+        <button
+            onclick={() => setDiffeculty(p.value)}
+            class={cn(
+                "mx-auto flex w-24 items-center justify-center rounded-lg bg-black-500 px-3 py-3 uppercase",
+                {
+                    "rounded-lg bg-gray-600 text-white": p.value === diffeculty(),
+                },
+            )}
+        >
+            {p.value}
+        </button>
+    );
+};
+
+const SelectDifficulty = (p: { onPlay: () => void }) => {
+    return (
+        <div class="flex flex-col gap-4">
+            <h2 class="text-center text-2xl text-white">Choose Bot Difficulty</h2>
+            <article class="flex w-full gap-3 rounded-lg py-3">
+                <DifficultyButton value="easy" />
+                <DifficultyButton value="normal" />
+                <DifficultyButton value="hard" />
+            </article>
+            <PlayButton onclick={p.onPlay} />
         </div>
     );
 };
 
 const Home = () => {
     const [isVsPlayerClicked, setIsVSPlayerClicked] = createSignal<boolean>(false);
+    const [isVsBotClicked, setIsVsBotClicked] = createSignal<boolean>(false);
 
     const navigate = useNavigate();
-    const { setGameType, setPlayerNames } = useGame();
+    const { setGameType, setPlayerNames, reset } = useGame();
 
     return (
         <main class="flex min-h-screen flex-col items-center justify-center bg-black-400 text-gray-400">
-            <Show when={!isVsPlayerClicked()}>
+            <GoBack
+                onclick={() => {
+                    reset();
+                    setIsVSPlayerClicked(false);
+                    setIsVsBotClicked(false);
+                }}
+            />
+            <Show when={!isVsPlayerClicked() && !isVsBotClicked()}>
                 <section class="flex h-[70vh] w-full flex-col items-center justify-center gap-10 sm:w-[60%] lg:w-[40%]">
                     <article class="flex gap-2">
                         <img src={iconX} alt="icon-o" class="h-16 w-16" />
@@ -189,11 +238,7 @@ const Home = () => {
                     </article>
                     <PickFirstPlayerSymbol />
                     <StarButtons
-                        onBotClicked={() => {
-                            setGameType("bot");
-                            setPlayerNames({ p1: "You", p2: "Bot" });
-                            navigate("/game");
-                        }}
+                        onBotClicked={() => setIsVsBotClicked(true)}
                         onPlayerCliked={() => setIsVSPlayerClicked(true)}
                     />
                 </section>
@@ -202,6 +247,15 @@ const Home = () => {
                 <InputPlayersName
                     onPlay={() => {
                         setGameType("humen");
+                        navigate("/game");
+                    }}
+                />
+            </Show>
+            <Show when={isVsBotClicked()}>
+                <SelectDifficulty
+                    onPlay={() => {
+                        setGameType("bot");
+                        setPlayerNames({ p1: "You", p2: `Bot` });
                         navigate("/game");
                     }}
                 />

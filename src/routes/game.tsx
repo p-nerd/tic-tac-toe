@@ -8,39 +8,9 @@ import { type TSpot, useGame, TSymbol } from "~/contexts/game_context";
 import { useModal } from "~/contexts/modal_context";
 import { cn } from "~/libs/utils";
 
+import GoBack from "~/components/GoBack";
 import result from "~/algorithms/result";
 import bot from "~/algorithms/bot";
-
-const GoBack = () => {
-    const navigate = useNavigate();
-    const { reset } = useGame();
-    return (
-        <div class="absolute left-2 top-2 flex px-4 pb-10 pt-8 lg:px-8">
-            <button
-                onclick={() => {
-                    reset();
-                    navigate("/");
-                }}
-                class="group flex text-sm font-semibold leading-6 text-slate-700 hover:text-slate-900 dark:text-slate-200 dark:hover:text-white"
-            >
-                <svg
-                    viewBox="0 -9 3 24"
-                    class="mr-3 h-6 w-auto overflow-visible text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300"
-                >
-                    <path
-                        d="M3 0L0 3L3 6"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    ></path>
-                </svg>
-                Go back
-            </button>
-        </div>
-    );
-};
 
 const WhichTurn = () => {
     const { turn } = useGame();
@@ -206,7 +176,10 @@ const Board = () => {
 };
 
 const Game = () => {
-    const { firstPlayer, score, playerNames, nextRound, setNextRound } = useGame();
+    const navigate = useNavigate();
+
+    const { reset, firstPlayer, score, playerNames, nextRound, diffeculty, setNextRound } =
+        useGame();
 
     createEffect(() => {
         if (nextRound()) {
@@ -216,7 +189,12 @@ const Game = () => {
 
     return (
         <main class="flex min-h-screen flex-col items-center justify-center bg-black-400 text-gray-400">
-            <GoBack />
+            <GoBack
+                onclick={() => {
+                    reset();
+                    navigate("/");
+                }}
+            />
             <section class="flex w-full flex-col items-center justify-center sm:w-[60%] md:h-[70vh] lg:w-[40%]">
                 <section class="mx-auto mb-10 flex w-[85%] items-center justify-between py-4">
                     <article class="flex gap-2">
@@ -241,6 +219,9 @@ const Game = () => {
                         label={`o (${firstPlayer() === "o" ? playerNames().p1 : playerNames().p2})`}
                         score={score().o}
                     />
+                </section>
+                <section class="mx-auto mt-5 w-[90%] text-center">
+                    The BOT Dificulty is "<span class="uppercase">{diffeculty()}</span>"
                 </section>
             </section>
         </main>

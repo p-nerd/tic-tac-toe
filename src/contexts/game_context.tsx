@@ -12,8 +12,8 @@ type TScore = { x: number; o: number; t: number };
 
 const makeGameContext = () => {
     const defaultGameType: TGameType = "bot";
-    const defaultPlayerNames: TPlayerNames = { p1: "You", p2: "Bot" };
     const defaultDiffeculty: TDifficulty = "hard";
+    const defaultPlayerNames: TPlayerNames = { p1: "You", p2: `Bot'` };
 
     const defaultBoard: TBoard = [0, 1, 2, 3, 4, 5, 6, 7, 8];
     const defaultTurn: TSymbol = "x";
