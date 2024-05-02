@@ -178,8 +178,16 @@ const Board = () => {
 const Game = () => {
     const navigate = useNavigate();
 
-    const { reset, firstPlayer, score, playerNames, nextRound, diffeculty, setNextRound } =
-        useGame();
+    const {
+        reset,
+        firstPlayer,
+        score,
+        playerNames,
+        nextRound,
+        diffeculty,
+        gameType,
+        setNextRound,
+    } = useGame();
 
     createEffect(() => {
         if (nextRound()) {
@@ -220,9 +228,11 @@ const Game = () => {
                         score={score().o}
                     />
                 </section>
-                <section class="mx-auto mt-5 w-[90%] text-center">
-                    The BOT Dificulty is "<span class="uppercase">{diffeculty()}</span>"
-                </section>
+                <Show when={gameType() === "bot"}>
+                    <section class="mx-auto mt-5 w-[90%] text-center">
+                        The BOT Dificulty is "<span class="uppercase">{diffeculty()}</span>"
+                    </section>
+                </Show>
             </section>
         </main>
     );
