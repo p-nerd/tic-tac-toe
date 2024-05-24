@@ -4,7 +4,8 @@ Tic Tac Toe Game build with SolidJS
 
 ## Links
 
--   Live: https://tic-tac-toe.developershihab.com
+-   Live 1: https://tic-tac-toe.developershihab.com
+-   Live 2: https://tic-tac-toe-p-nerd.vercel.app
 -   Description: https://developershihab.com/projects/tic-tac-toe
 
 ## Features
