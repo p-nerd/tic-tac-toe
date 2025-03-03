@@ -222,7 +222,7 @@ const Home = () => {
     const { setGameType, setPlayerNames, reset } = useGame();
 
     return (
-        <main class="flex min-h-screen flex-col items-center justify-center bg-black-400 text-gray-400">
+        <main class="flex flex-col items-center justify-center ">
             <GoBack
                 onclick={() => {
                     reset();
